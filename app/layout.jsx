@@ -7,8 +7,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="bg-[url('../public/GradesBG.png')]">
-      <body>{children}</body>
+    <html lang="en">
+      <body className="bg-slate-400">{children}</body>
     </html>
   );
 }
