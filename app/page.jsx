@@ -1,7 +1,12 @@
-import Form from "./components/Form";
+"use client";
+
+import { useRouter } from "next/navigation";
 import Logo from "./components/Logo";
+import SignInForm from "./components/(auth)/SignInForm";
 
 const SignIn = () => {
+  const router = useRouter();
+
   const inputs = [
     {
       label: "Email",
@@ -12,13 +17,17 @@ const SignIn = () => {
       type: "password",
     },
   ];
+
   return (
     <div className="p-6 flex justify-between w-full h-full">
       <Logo />
-      <Form
+      <SignInForm
         title={"Welcome Student"}
         subtitle={"Please enter your credentials"}
         inputs={inputs}
+        redirectLabel={"Don't have an account?"}
+        redirectSpan={"Create"}
+        onRedirect={() => router.push("Sign-up")}
       />
     </div>
   );
