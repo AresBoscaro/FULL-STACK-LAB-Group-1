@@ -37,7 +37,7 @@ const SignUpForm = ({ onRedirect }) => {
   ];
 
   return (
-    <div className="py-6 px-16 bg-white/40 rounded-2xl h-full w-[860px] flex flex-col justify-between shadow-sm">
+    <div className="py-6 px-16 bg-white rounded-2xl h-full w-[860px] flex flex-col justify-between shadow-sm">
       <div className="flex flex-col w-full items-center">
         <h1 className="font-bold text-xl text-zinc-900">Create an account</h1>
       </div>

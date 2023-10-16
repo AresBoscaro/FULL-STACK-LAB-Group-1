@@ -1,7 +1,7 @@
 const ActionFormButton = ({ onClick, label }) => {
   return (
     <button
-      className="w-full rounded-xl p-2 text-center bg-zinc-700"
+      className="w-full rounded-xl p-2 text-center bg-slate-900"
       onClick={onClick}
     >
       <h3 className="text-white font-semibold text-lg">{label}</h3>
