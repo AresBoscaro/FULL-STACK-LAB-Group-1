@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import Logo from "./components/Logo";
-import SignInForm from "./components/(auth)/SignInForm";
+import SignInForm from "./components/auth/SignInForm";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useState } from "react";
 
 const SignIn = () => {
   const supabase = createClientComponentClient();
