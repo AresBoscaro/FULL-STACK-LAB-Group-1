@@ -1,4 +1,4 @@
-const RedirectButton = ({ onClick, label }) => {
+const ActionFormButton = ({ onClick, label }) => {
   return (
     <button
       className="w-full rounded-xl p-2 text-center bg-zinc-700"
@@ -9,4 +9,4 @@ const RedirectButton = ({ onClick, label }) => {
   );
 };
 
-export default RedirectButton;
+export default ActionFormButton;
