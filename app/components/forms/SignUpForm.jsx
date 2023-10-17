@@ -45,13 +45,13 @@ const SignUpForm = ({ onRedirect }) => {
         <div className="w-full">
           {inputsL?.map((input, id) => (
             <div key={id} className="mt-8">
-              <h3 className="text-base font-semibold text-zinc-900">
+              <h3 className="text-base font-regular text-zinc-900">
                 {input.label}
               </h3>
               <input
                 name={input.name}
                 type={input.type}
-                className="w-full p-2 rounded-lg border-[1px] border-zinc-500/40 mt-4 outline-none"
+                className="w-full p-2 rounded-lg border-[1px] border-zinc-500/40 outline-none"
               />
             </div>
           ))}
@@ -59,13 +59,13 @@ const SignUpForm = ({ onRedirect }) => {
         <div className="w-full">
           {inputsR?.map((input, id) => (
             <div key={id} className="mt-8">
-              <h3 className="text-base font-semibold text-zinc-900">
+              <h3 className="text-base font-regular text-zinc-900">
                 {input.label}
               </h3>
               <input
                 name={input.name}
                 type={input.type}
-                className="w-full p-2 rounded-lg border-[1px] border-zinc-500/40 mt-4 outline-none"
+                className="w-full p-2 rounded-lg border-[1px] border-zinc-500/40 outline-none"
               />
             </div>
           ))}
