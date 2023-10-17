@@ -1,4 +1,4 @@
-import ActionFormButton from "../ActionFormButton";
+import ActionFormButton from "./ActionFormButton";
 
 const SignUpForm = ({ onRedirect }) => {
   const inputsL = [

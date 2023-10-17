@@ -3,9 +3,13 @@
 "use client";
 
 import { HelpCircle, LayoutGrid, LogOut, User2 } from "lucide-react";
+import { LuLayoutGrid } from "react-icons/lu";
+import { AiOutlineUser } from "react-icons/ai";
+import { IoHelp } from "react-icons/io5";
+import { LuLogOut } from "react-icons/lu";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useBoard } from "../providers/boards-provider";
+import { useBoard } from "../../providers/boards-provider";
 
 const SidebarItems = () => {
   const { tab, setTab } = useBoard();
@@ -15,42 +19,22 @@ const SidebarItems = () => {
   const studTabs = [
     {
       label: "Dashboard",
-      icon: (
-        <LayoutGrid
-          className={tab == "Dashboard" ? "text-white" : "text-slate-600"}
-          size={18}
-        />
-      ),
+      icon: <LuLayoutGrid size={18} />,
     },
     {
       label: "Profile",
-      icon: (
-        <User2
-          className={tab == "Profile" ? "text-white" : "text-slate-600"}
-          size={18}
-        />
-      ),
+      icon: <AiOutlineUser size={18} />,
     },
     {
       label: "Help",
-      icon: (
-        <HelpCircle
-          className={tab == "Help" ? "text-white" : "text-slate-600"}
-          size={18}
-        />
-      ),
+      icon: <IoHelp size={18} />,
     },
   ];
 
   const adminTabs = [
     {
       label: "Dashboard",
-      icon: (
-        <LayoutGrid
-          className={tab == "Dashboard" ? "text-white" : "text-slate-600"}
-          size={18}
-        />
-      ),
+      icon: <LuLayoutGrid size={18} />,
     },
   ];
 
@@ -71,7 +55,11 @@ const SidebarItems = () => {
             }`}
             onClick={() => setTab(item.label)}
           >
-            {item.icon}
+            <div
+              className={tab === item.label ? "text-white" : "text-slate-600"}
+            >
+              {item.icon}
+            </div>
             <h3
               className={`${
                 tab === item.label ? "text-white" : "text-slate-600"
@@ -83,9 +71,9 @@ const SidebarItems = () => {
         ))}
       </div>
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-lg font-semibold text-slate-800">User</h1>
-        <div className="hover:bg-slate-200 rounded-2xl p-4 cursor-pointer">
-          <LogOut className="text-slate-800" size={20} />
+        <h1 className="text-sm font-semibold text-slate-800">UserName</h1>
+        <div className="hover:bg-slate-200 rounded-2xl flex items-center justify-center h-12 w-12 cursor-pointer">
+          <LuLogOut className="text-slate-800" size={18} />
         </div>
       </div>
     </div>
