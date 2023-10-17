@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import ActionFormButton from "../ActionFormButton";
+import ActionFormButton from "./ActionFormButton";
 
 const SignInForm = ({ onRedirect }) => {
   const inputs = [

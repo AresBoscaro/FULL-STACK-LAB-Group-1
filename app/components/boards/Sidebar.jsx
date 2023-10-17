@@ -1,4 +1,4 @@
-import Logo from "./Logo";
+import Logo from "../Logo";
 import SidebarItems from "./SidebarItems";
 
 const Sidebar = () => {
