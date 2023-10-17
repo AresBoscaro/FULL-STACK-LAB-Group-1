@@ -1,9 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
 
 const AuthForm = ({
   title,
@@ -21,6 +20,13 @@ const AuthForm = ({
 
   const handleSignUp = async () => {
     await supabase.auth.signUp({
+      email,
+      password,
+    });
+  };
+
+  const handleSignIn = async () => {
+    await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -57,7 +63,11 @@ const AuthForm = ({
         </div>
       </div>
       <div>
-        <ActionFormButton label={actionLabel} onClick={handleSignUp} />
+        <ActionFormButton
+          label={actionLabel}
+          onSignIn={handleSignIn}
+          onSignUp={handleSignUp}
+        />
         <div className="w-full flex justify-center mt-2">
           <p className="text-xs font-light text-zinc-500">
             {redirectLabel}{" "}
@@ -76,11 +86,11 @@ const AuthForm = ({
 
 export default AuthForm;
 
-const ActionFormButton = ({ onClick, label }) => {
+const ActionFormButton = ({ onSignIn, onSignUp, label }) => {
   return (
     <button
       className="w-full rounded-xl p-2 text-center bg-slate-900"
-      onClick={onClick}
+      onClick={label === "Sign In" ? onSignIn : onSignUp}
     >
       <h3 className="text-white font-semibold text-lg">{label}</h3>
     </button>
