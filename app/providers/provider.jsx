@@ -4,16 +4,8 @@ import { createContext, useContext, useState } from "react";
 
 const context = createContext();
 
-export const BoardsProvider = ({ children }) => {
-  const [tab, setTab] = useState("Dashboard");
-  const [items, setItems] = useState([]);
-
-  const exposed = {
-    tab,
-    setTab,
-    items,
-    setItems,
-  };
+export const Provider = ({ children }) => {
+  const exposed = {};
 
   return <context.Provider value={exposed}>{children}</context.Provider>;
 };
