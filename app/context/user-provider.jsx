@@ -8,7 +8,7 @@ const context = createContext();
 
 export const UserProvider = ({ children }) => {
   const [User, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [Profile, setProfile] = useState(null);
 
   const supabase = createClientComponentClient();
 
@@ -20,13 +20,13 @@ export const UserProvider = ({ children }) => {
     if (user) setUser(user);
   };
 
-  const getUserRole = async () => {
+  const getProfile = async () => {
     const { data, error } = await supabase
       .from("profiles")
-      .select("isAdmin")
+      .select()
       .eq("id", User.id);
 
-    if (!error) setIsAdmin(data[0].isAdmin);
+    if (!error) setProfile(data[0]);
   };
 
   useEffect(() => {
@@ -35,13 +35,15 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("user", User);
-    if (User) getUserRole();
+    if (User) getProfile();
+    console.log("profile", Profile);
   }, [User]);
 
   const exposed = {
     User,
     setUser,
-    isAdmin,
+    Profile,
+    setProfile,
   };
 
   return <context.Provider value={exposed}>{children}</context.Provider>;

@@ -8,13 +8,18 @@ import { useUser } from "./context/user-provider";
 import { useEffect } from "react";
 
 const SignIn = () => {
-  const { User } = useUser();
-
+  const { Profile } = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    if (User) router.push("/dashboard");
-  }, [User]);
+    if (Profile) {
+      if (Profile.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  }, [Profile]);
 
   const inputs = [
     {

@@ -38,11 +38,11 @@ const SignUp = () => {
     },
   ];
 
-  const { User, isAdmin } = useUser();
+  const { Profile } = useUser();
 
   useEffect(() => {
-    if (User) {
-      if (isAdmin) {
+    if (Profile) {
+      if (Profile.isAdmin) {
         router.push("/admin");
       } else {
         router.push("/dashboard");

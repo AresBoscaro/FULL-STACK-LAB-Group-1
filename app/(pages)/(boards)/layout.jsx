@@ -6,11 +6,11 @@ import { useUser } from "@/app/context/user-provider";
 import { useEffect } from "react";
 
 const BoardsLayout = ({ children }) => {
-  const { User } = useUser();
+  const { Profile } = useUser();
 
   useEffect(() => {
-    if (!User) redirect("/");
-  }, [User]);
+    if (!Profile) redirect("/");
+  }, [Profile]);
 
   return (
     <BoardsProvider>

@@ -14,7 +14,7 @@ import { useUser } from "@/app/context/user-provider";
 
 const SidebarItems = () => {
   const { tab, setTab } = useBoard();
-  const { setUser } = useUser();
+  const { Profile, setUser, setProfile } = useUser();
 
   const studTabs = [
     {
@@ -51,7 +51,10 @@ const SidebarItems = () => {
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
 
-    if (!error) setUser(null);
+    if (!error) {
+      setUser(null);
+      setProfile(null);
+    }
   };
 
   return (
@@ -81,7 +84,9 @@ const SidebarItems = () => {
         ))}
       </div>
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-sm font-semibold text-slate-800">UserName</h1>
+        <h1 className="text-sm font-semibold text-slate-800">
+          {Profile?.first_name}
+        </h1>
         <div
           className="hover:bg-slate-200 rounded-2xl flex items-center justify-center h-12 w-12 cursor-pointer"
           onClick={handleSignOut}
