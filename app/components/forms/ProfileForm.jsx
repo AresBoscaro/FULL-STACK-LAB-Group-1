@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@/app/context/user-provider";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ProfileForm() {
   const supabase = createClientComponentClient();
@@ -57,17 +58,19 @@ export default function ProfileForm() {
   async function updateUser() {
     const updatedUserData = {};
 
-    if (name !== Profile.first_name) {
+    if (name !== Profile?.first_name) {
       updatedUserData.first_name = name;
     }
-    if (lastname !== Profile.last_name) {
+    if (lastname !== Profile?.last_name) {
       updatedUserData.last_name = lastname;
     }
-    if (matricola !== Profile.stud_id) {
+    if (matricola !== Profile?.stud_id) {
       updatedUserData.stud_id = matricola;
     }
 
     console.log(updatedUserData);
+
+    if (Object.keys(updatedUserData).length === 0) return;
 
     const { data, error } = await supabase
       .from("profiles")
@@ -76,7 +79,10 @@ export default function ProfileForm() {
 
     if (error) {
       console.error("Error updating user:", error);
+      toast.error("Error updating user:", error);
       return null; // Handle the error as needed
+    } else {
+      toast.success("Profile successfully updated!");
     }
 
     return data;
@@ -84,6 +90,13 @@ export default function ProfileForm() {
 
   return (
     <div className="p-6 rounded-2xl h-full w-[430px] flex flex-col justify-between shadow-sm bg-white">
+      <Toaster
+        toastOptions={{
+          style: {
+            padding: "16px",
+          },
+        }}
+      />
       <div>
         {inputs.map((input, id) => (
           <div key={id} className="mt-8">
