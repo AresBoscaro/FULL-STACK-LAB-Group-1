@@ -1,13 +1,31 @@
-/* "use client";
- */
+
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
 import { useRouter } from "next/navigation";
 import Logo from "@/app/components/Logo";
 import AuthForm from "@/app/components/forms/AuthForm";
+import { useUser } from "@/app/context/user-provider";
 
 const SignUp = () => {
   const router = useRouter();
 
   const inputs = [
+    {
+      label: "First Name",
+      type: "text",
+      name: "fname",
+    },
+    {
+      label: "Last Name",
+      type: "text",
+      name: "lname",
+    },
+    {
+      label: "ID",
+      type: "text",
+      name: "id",
+    },
     {
       label: "Email",
       type: "email",
@@ -19,6 +37,18 @@ const SignUp = () => {
       name: "password",
     },
   ];
+
+  const { User, isAdmin } = useUser();
+
+  useEffect(() => {
+    if (User) {
+      if (isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  }, [User]);
 
   return (
     <div className="p-6 flex justify-between w-full h-full">
