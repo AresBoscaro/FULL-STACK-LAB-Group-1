@@ -18,9 +18,9 @@ const MainContent = () => {
   const test = [1, 2, 3];
 
   const getCourses = async () => {
-    const { data, error } = supabaseClient.from("classes").select("id", "name");
+    const { data, error } = await supabaseClient.from("classes").select();
 
-    if (!error) console.log("courses", data);
+    console.log("courses", data);
   };
 
   useEffect(() => {
