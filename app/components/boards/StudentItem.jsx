@@ -2,13 +2,16 @@
 import { BiChevronDown } from "react-icons/bi";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
+import { AiFillSave } from "react-icons/ai";
 import { useState } from "react";
+import { supabaseClient } from "@/app/lib/supabase";
 
 const StudentItem = () => {
   /* Current user  */
   /* Get moduli  */
   const [showFeedbacks, setShowFeedbacks] = useState(false);
   const [stars, setStars] = useState(0);
+  const [comment, setComment] = useState(0);
 
   const toggleItem = () => {
     setShowFeedbacks(!showFeedbacks);
@@ -16,6 +19,11 @@ const StudentItem = () => {
 
   const updateRating = (index) => {
     setStars(index + 1);
+  };
+
+  const saveFeedback = async () => {
+    console.log(comment);
+    await supabaseClient.from("feedbacks").insert({});
   };
 
   return (
@@ -57,8 +65,18 @@ const StudentItem = () => {
       </div>
 
       {showFeedbacks ? (
-        <div className="w-full py-2 flex flex-col gap-3">
-          <textarea className="w-full resize-none p-2" />
+        <div className="w-full py-2 flex items-center gap-3">
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="w-full resize-none p-2 rounded"
+          />
+          <div
+            className="p-2 rounded-xl hover:bg-slate-400/40 cursor-pointer transition-all ml-auto"
+            onClick={saveFeedback}
+          >
+            <AiFillSave size={20} />
+          </div>
         </div>
       ) : null}
     </div>
