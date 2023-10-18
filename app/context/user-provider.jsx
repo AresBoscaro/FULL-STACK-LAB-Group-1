@@ -62,6 +62,7 @@ export const UserProvider = ({ children }) => {
     setUser,
     Profile,
     setProfile,
+    getProfile,
   };
 
   return <context.Provider value={exposed}>{children}</context.Provider>;
