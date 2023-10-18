@@ -6,11 +6,11 @@ import { LuLayoutGrid } from "react-icons/lu";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoHelp } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useBoard } from "../../context/boards-provider";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@/app/context/user-provider";
+import { supabaseClient } from "@/app/lib/supabase";
 
 const SidebarItems = () => {
   const { tab, setTab } = useBoard();
@@ -46,10 +46,8 @@ const SidebarItems = () => {
     if (pathname === "/admin") setTabs(adminTabs);
   }, [pathname]);
 
-  const supabase = createClientComponentClient();
-
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await supabaseClient.auth.signOut();
 
     if (!error) {
       setUser(null);

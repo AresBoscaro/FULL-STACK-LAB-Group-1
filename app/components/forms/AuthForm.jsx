@@ -2,8 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@/app/context/user-provider";
+import { supabaseClient } from "@/app/lib/supabase";
 
 const AuthForm = ({
   title,
@@ -20,11 +20,10 @@ const AuthForm = ({
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const supabase = createClientComponentClient();
   const { User, setUser } = useUser();
 
   const handleSignUp = async () => {
-    await supabase.auth.signUp({
+    await supabaseClient.auth.signUp({
       email,
       password,
     });
