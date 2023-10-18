@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
+import { UserProvider } from "./context/user-provider";
 import "./globals.css";
 
 export const metadata = {
@@ -7,8 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-400">{children}</body>
-    </html>
+    <UserProvider>
+      <html lang="en">
+        <body className="bg-slate-400">{children}</body>
+      </html>
+    </UserProvider>
   );
 }

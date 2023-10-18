@@ -1,16 +1,16 @@
-import { BoardsProvider } from "@/app/providers/boards-provider";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+"use client";
+
+import { BoardsProvider } from "@/app/context/boards-provider";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { useUser } from "@/app/context/user-provider";
+import { useEffect } from "react";
 
-const BoardsLayout = async ({ children }) => {
-  const supabase = createServerComponentClient({ cookies });
+const BoardsLayout = ({ children }) => {
+  const { User } = useUser();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) redirect("/unauthenticated");
+  useEffect(() => {
+    if (!User) redirect("/");
+  }, [User]);
 
   return (
     <BoardsProvider>

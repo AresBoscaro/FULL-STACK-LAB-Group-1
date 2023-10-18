@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useUser } from "@/app/context/user-provider";
 
 const AuthForm = ({
   title,
@@ -13,23 +14,40 @@ const AuthForm = ({
   inputs,
   actionLabel,
 }) => {
-  const supabase = createClientComponentClient();
-
-  const [email, setEmail] = useState("");
+  const [fname, setFName] = useState("");
+  const [lname, setLName] = useState("");
+  const [studId, setStudId] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const supabase = createClientComponentClient();
+  const { User, setUser } = useUser();
 
   const handleSignUp = async () => {
     await supabase.auth.signUp({
       email,
       password,
     });
+
+    if (User) {
+      await supabase
+        .from("profiles")
+        .update({
+          first_name: fname,
+          last_name: lname,
+          stud_id: studId,
+        })
+        .eq("id", User.id);
+    }
   };
 
   const handleSignIn = async () => {
-    await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
+
+    if (!error) setUser(data.user);
   };
 
   return (
@@ -40,16 +58,22 @@ const AuthForm = ({
       </div>
       <div>
         {inputs?.map((input, id) => (
-          <div key={id} className="mt-8">
-            <h3 className="text-base font-regular text-zinc-900">
+          <div key={id} className="mt-4">
+            <h3 className="text-sm font-regular text-zinc-900">
               {input.label}
             </h3>
             <input
               name={input.name}
               type={input.type}
               onChange={(e) =>
-                input.name === "email"
+                input.name === "fname"
+                  ? setFName(e.target.value)
+                  : input.name === "lname"
+                  ? setLName(e.target.value)
+                  : input.name === "email"
                   ? setEmail(e.target.value)
+                  : input.name === "id"
+                  ? setStudId(e.target.value)
                   : setPassword(e.target.value)
               }
               className="w-full p-2 rounded-lg border-[1px] border-slate-900/40 outline-none"

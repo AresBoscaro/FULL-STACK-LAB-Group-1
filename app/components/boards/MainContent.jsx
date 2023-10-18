@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useBoard } from "../../providers/boards-provider";
+import { useBoard } from "../../context/boards-provider";
 import StudentItem from "./StudentItem";
 import AdminItem from "./AdminItem";
 

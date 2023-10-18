@@ -2,19 +2,19 @@
 
 "use client";
 
-import { HelpCircle, LayoutGrid, LogOut, User2 } from "lucide-react";
 import { LuLayoutGrid } from "react-icons/lu";
 import { AiOutlineUser } from "react-icons/ai";
 import { IoHelp } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useBoard } from "../../providers/boards-provider";
+import { useBoard } from "../../context/boards-provider";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { useUser } from "@/app/context/user-provider";
 
 const SidebarItems = () => {
   const { tab, setTab } = useBoard();
-
-  const pathname = usePathname();
+  const { setUser } = useUser();
 
   const studTabs = [
     {
@@ -40,9 +40,19 @@ const SidebarItems = () => {
 
   const [tabs, setTabs] = useState(studTabs);
 
+  const pathname = usePathname();
+
   useEffect(() => {
     if (pathname === "/admin") setTabs(adminTabs);
   }, [pathname]);
+
+  const supabase = createClientComponentClient();
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (!error) setUser(null);
+  };
 
   return (
     <div className="mt-10 flex flex-col h-full justify-between">
@@ -72,7 +82,10 @@ const SidebarItems = () => {
       </div>
       <div className="flex items-center justify-between w-full">
         <h1 className="text-sm font-semibold text-slate-800">UserName</h1>
-        <div className="hover:bg-slate-200 rounded-2xl flex items-center justify-center h-12 w-12 cursor-pointer">
+        <div
+          className="hover:bg-slate-200 rounded-2xl flex items-center justify-center h-12 w-12 cursor-pointer"
+          onClick={handleSignOut}
+        >
           <LuLogOut className="text-slate-800" size={18} />
         </div>
       </div>
