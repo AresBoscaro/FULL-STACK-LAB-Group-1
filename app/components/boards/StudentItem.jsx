@@ -3,7 +3,7 @@ import { BiChevronDown } from "react-icons/bi";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
 import { AiFillSave } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useUser } from "@/app/context/user-provider";
 
@@ -19,12 +19,23 @@ const StudentItem = ({ course }) => {
     setShowFeedbacks(!showFeedbacks);
   };
 
+  console.log(course);
   const updateRating = (index) => {
     setStars(index + 1);
   };
 
+  const setFeedback = () => {
+    if (course.feedback) {
+      setComment(course.feedback.comment);
+      setStars(course.feedback.rating);
+    }
+  };
+
+  useEffect(() => {
+    setFeedback();
+  }, [course.feedback]);
+
   const saveFeedback = async () => {
-    console.log(comment);
     await supabaseClient.from("feedbacks").insert({
       metadata: {
         rating: stars,
