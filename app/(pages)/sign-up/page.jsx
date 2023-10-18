@@ -37,10 +37,16 @@ const SignUp = () => {
     },
   ];
 
-  const { User } = useUser();
+  const { User, isAdmin } = useUser();
 
   useEffect(() => {
-    if (User) router.push("/dashboard");
+    if (User) {
+      if (isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
   }, [User]);
 
   return (
