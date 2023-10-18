@@ -1,4 +1,3 @@
-
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
@@ -6,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Logo from "@/app/components/Logo";
 import AuthForm from "@/app/components/forms/AuthForm";
 import { useUser } from "@/app/context/user-provider";
+import { useEffect } from "react";
 
 const SignUp = () => {
   const router = useRouter();
