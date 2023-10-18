@@ -15,8 +15,6 @@ const MainContent = () => {
 
   const pathname = usePathname();
 
-  const test = [1, 2, 3];
-
   const [courses, setCourses] = useState([]);
 
   const getCourses = async () => {
@@ -34,9 +32,9 @@ const MainContent = () => {
       <h1 className="text-slate-800 font-semibold text-lg">{tab}</h1>
       {tab === "Dashboard" && (
         <div className="space-y-4 ">
-          {courses.map((item, id) =>
+          {courses.map((course, id) =>
             pathname === "/dashboard" ? (
-              <StudentItem key={id} />
+              <StudentItem key={id} course={course} />
             ) : (
               <AdminItem key={id} />
             )

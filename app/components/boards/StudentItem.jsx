@@ -5,13 +5,15 @@ import { AiOutlineStar } from "react-icons/ai";
 import { AiFillSave } from "react-icons/ai";
 import { useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase";
+import { useUser } from "@/app/context/user-provider";
 
-const StudentItem = () => {
+const StudentItem = ({ course }) => {
   /* Current user  */
   /* Get moduli  */
   const [showFeedbacks, setShowFeedbacks] = useState(false);
   const [stars, setStars] = useState(0);
-  const [comment, setComment] = useState(0);
+  const [comment, setComment] = useState("");
+  const { Profile } = useUser();
 
   const toggleItem = () => {
     setShowFeedbacks(!showFeedbacks);
@@ -23,14 +25,23 @@ const StudentItem = () => {
 
   const saveFeedback = async () => {
     console.log(comment);
-    await supabaseClient.from("feedbacks").insert({});
+    await supabaseClient.from("feedbacks").insert({
+      metadata: {
+        rating: stars,
+        comment: comment,
+      },
+      class_id: course.id,
+      profile_id: Profile.id,
+    });
   };
 
   return (
     <div className="w-full rounded-2xl p-6 bg-slate-200 flex flex-col gap-3">
       <div className="flex items-center w-full">
         <div className="flex gap-28">
-          <h1 className="text-base font-semibold text-slate-800">Class</h1>
+          <h1 className="text-base font-semibold text-slate-800">
+            {course.name}
+          </h1>
           <div className="flex gap-3">
             {[...Array(5)].map((_, index) =>
               index < stars ? (
