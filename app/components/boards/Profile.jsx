@@ -1,5 +1,10 @@
-import React from "react";
+import ProfileForm from "../forms/ProfileForm";
 
 export default function Profile() {
-  return <div>Profile</div>;
+  return (
+    <div>
+      <h1 className="ml-5 font-bold">Edit profile</h1>
+      <ProfileForm />
+    </div>
+  );
 }
