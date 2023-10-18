@@ -21,13 +21,13 @@ export default function ProfileForm() {
       value: name,
     },
     {
-      label: "Lastname",
+      label: "Last Name",
       type: "lastname",
       name: "lastname",
       value: lastname,
     },
     {
-      label: "Matricola",
+      label: "ID",
       type: "matricola",
       name: "matricola",
       value: matricola,
@@ -111,7 +111,7 @@ function ConfirmButton({ onClick }) {
       className="w-full rounded-xl p-2 text-center bg-slate-900"
       onClick={onClick}
     >
-      <h3 className="text-white font-semibold text-lg">confirm</h3>
+      <h3 className="text-white font-semibold text-lg">Confirm</h3>
     </button>
   );
 }
