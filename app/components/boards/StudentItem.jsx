@@ -37,13 +37,14 @@ const StudentItem = () => {
                 <AiFillStar
                   size={18}
                   key={index}
-                  className="hover:color-white cursor-pointer transition-all"
+                  className="hover:text-slate-900 cursor-pointer transition-all text-slate-900"
                   onClick={() => updateRating(index)}
                 />
               ) : (
                 <AiOutlineStar
                   size={18}
                   key={index}
+                  className="hover:text-slate-900 cursor-pointer transition-all text-slate-600"
                   onClick={() => updateRating(index)}
                 />
               )
@@ -72,10 +73,11 @@ const StudentItem = () => {
             className="w-full resize-none p-2 rounded"
           />
           <div
-            className="p-2 rounded-xl hover:bg-slate-400/40 cursor-pointer transition-all ml-auto"
+            className="py-2 px-4 rounded-xl hover:bg-slate-400/40 cursor-pointer transition-all ml-auto flex items-center gap-2"
             onClick={saveFeedback}
           >
-            <AiFillSave size={20} />
+            {/* <AiFillSave size={14} className="text-slate-700" /> */}
+            <h3 className="text-sm font-regular text-slate-900">Save</h3>
           </div>
         </div>
       ) : null}
