@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useBoard } from "../../context/boards-provider";
 import StudentItem from "./StudentItem";
 import AdminItem from "./AdminItem";
-import Profile from "./Profile";
+import ProfileManager from "./ProfileManager";
 import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useEffect } from "react";
@@ -41,7 +41,7 @@ const MainContent = () => {
           )}
         </div>
       )}
-      {tab == "Profile" && <Profile />}
+      {tab == "Profile" && <ProfileManager />}
     </div>
   );
 };
