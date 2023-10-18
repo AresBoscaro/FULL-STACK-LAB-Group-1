@@ -2,14 +2,12 @@
 "use client";
 
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@/app/context/user-provider";
 import toast, { Toaster } from "react-hot-toast";
+import { supabaseClient } from "@/app/lib/supabase";
 
 export default function ProfileForm() {
-  const supabase = createClientComponentClient();
-
-  const { Profile } = useUser();
+  const { Profile, getProfile } = useUser();
   const [name, setName] = useState(Profile.first_name);
   const [lastname, setLastname] = useState(Profile.last_name);
   const [matricola, setMatricola] = useState(Profile.stud_id);
@@ -72,7 +70,7 @@ export default function ProfileForm() {
 
     if (Object.keys(updatedUserData).length === 0) return;
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("profiles")
       .update(updatedUserData)
       .eq("id", Profile.id);
@@ -83,6 +81,7 @@ export default function ProfileForm() {
       return null; // Handle the error as needed
     } else {
       toast.success("Profile successfully updated!");
+      getProfile();
     }
 
     return data;
