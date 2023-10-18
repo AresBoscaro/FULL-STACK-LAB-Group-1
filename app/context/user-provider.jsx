@@ -36,8 +36,11 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     console.log("user", User);
     if (User) getProfile();
-    console.log("profile", Profile);
   }, [User]);
+
+  useEffect(() => {
+    if (Profile) console.log("profile", Profile);
+  }, [Profile]);
 
   const exposed = {
     User,
