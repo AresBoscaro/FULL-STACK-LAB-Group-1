@@ -1,21 +1,32 @@
+#PRIMO PROTOTIPO DI COMPOSER PER DOCKER CONTAINERS
+
 version: '3'
 services:
-  webapp:
+
+  #WEBAPP
+
+  webapp: 
     build:
       context: ./webapp #Nome Temporaneo
     ports:
-      - 3500:3500
+      - 3500:3500 #Da aggiustare in base al container da creare
     depends_on:
       - supabase
-  supabase:
+
+  #DATABASE
+
+  supabase: 
     build:
       context: ./supabase
     ports:
       - 5432:5432
-  nginx:
+  
+  #NGINX
+  
+  nginx: 
     build:
       context: ./nginx
     ports:
-      - 8500:8500
+      - 8500:8500 #Valori temporanei del container di test. Da Adattare in base al container definitivo.
     depends_on:
       - webapp #Nome Temporaneo
