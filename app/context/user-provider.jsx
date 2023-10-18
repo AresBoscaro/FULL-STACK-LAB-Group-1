@@ -27,12 +27,30 @@ export const UserProvider = ({ children }) => {
     if (!error) setProfile(data[0]);
   };
 
+  const getFeedbacks = async () => {
+    const { data, error } = await supabaseClient
+      .from("feedbacks")
+      .select("metadata, class_id")
+      .eq("profile_id", User.id);
+
+    if (!error)
+      setProfile((prev) => {
+        return {
+          ...prev,
+          feedbacks: data,
+        };
+      });
+  };
+
   useEffect(() => {
     handleUser();
   }, []);
 
   useEffect(() => {
-    if (User) getProfile();
+    if (User) {
+      getProfile();
+      getFeedbacks();
+    }
   }, [User]);
 
   useEffect(() => {
