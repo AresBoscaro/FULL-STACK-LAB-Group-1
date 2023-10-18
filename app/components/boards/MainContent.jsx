@@ -20,7 +20,30 @@ const MainContent = () => {
   const getCourses = async () => {
     const { data, error } = await supabaseClient.from("classes").select();
 
-    if (!error) setCourses(data);
+    if (!Profile.feedbacks) {
+      setCourses(data);
+    }
+
+    /*     const mergedCourses = data.reduce((acc, course) => {
+      const courseFeedbacks = Profile.feedbacks.filter(
+        (feedback) => feedback.class_id === course.id
+      );
+      acc.push({ ...course, feedbacks: courseFeedbacks });
+      return acc;
+    }, []); */
+
+    const mergedCourses = data.reduce((acc, course) => {
+      const courseFeedbacks = Profile.feedbacks?.filter(
+        (feedback) => feedback.class_id === course.id
+      );
+      acc.push({
+        ...course,
+        feedback: courseFeedbacks ? courseFeedbacks[0]?.metadata : null,
+      });
+      return acc;
+    }, []);
+
+    setCourses(mergedCourses);
   };
 
   useEffect(() => {
