@@ -1,5 +1,5 @@
-"use client";
-
+/* "use client";
+ */
 import { useRouter } from "next/navigation";
 import Logo from "@/app/components/Logo";
 import AuthForm from "@/app/components/forms/AuthForm";
