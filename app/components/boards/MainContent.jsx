@@ -7,7 +7,7 @@ import AdminItem from "./AdminItem";
 import ProfileManager from "./ProfileManager";
 import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const MainContent = () => {
   const { tab } = useBoard();
@@ -17,10 +17,12 @@ const MainContent = () => {
 
   const test = [1, 2, 3];
 
+  const [courses, setCourses] = useState([]);
+
   const getCourses = async () => {
     const { data, error } = await supabaseClient.from("classes").select();
 
-    console.log("courses", data);
+    if (!error) setCourses(data);
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const MainContent = () => {
       <h1 className="text-slate-800 font-semibold text-lg">{tab}</h1>
       {tab === "Dashboard" && (
         <div className="space-y-4 ">
-          {test.map((item, id) =>
+          {courses.map((item, id) =>
             pathname === "/dashboard" ? (
               <StudentItem key={id} />
             ) : (
