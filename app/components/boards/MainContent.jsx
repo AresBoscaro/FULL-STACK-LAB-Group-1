@@ -18,14 +18,14 @@ const MainContent = () => {
   const test = [1, 2, 3];
 
   const getCourses = async () => {
-    const { data, error } = supabaseClient.from("classes").select();
+    const { data, error } = supabaseClient.from("classes").select("id", "name");
 
     if (!error) console.log("courses", data);
   };
 
   useEffect(() => {
-    getCourses();
-  }, []);
+    if (Profile) getCourses();
+  }, [Profile]);
 
   return (
     <div className="h-full w-full bg-white shadow-sm flex flex-col rounded-2xl p-6 space-y-10 overflow-y-auto">

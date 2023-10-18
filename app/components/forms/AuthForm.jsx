@@ -29,7 +29,7 @@ const AuthForm = ({
     });
 
     if (User) {
-      await supabase
+      await supabaseClient
         .from("profiles")
         .update({
           first_name: fname,
@@ -41,7 +41,7 @@ const AuthForm = ({
   };
 
   const handleSignIn = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
       email,
       password,
     });
