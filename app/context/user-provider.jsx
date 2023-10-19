@@ -24,7 +24,10 @@ export const UserProvider = ({ children }) => {
       .select()
       .eq("id", User.id);
 
-    if (!error) setProfile(data[0]);
+    if (data) {
+      setProfile(data[0]);
+      getFeedbacks();
+    }
   };
 
   const getFeedbacks = async () => {
@@ -33,7 +36,7 @@ export const UserProvider = ({ children }) => {
       .select("metadata, class_id")
       .eq("profile_id", User.id);
 
-    if (!error)
+    if (data)
       setProfile((prev) => {
         return {
           ...prev,
@@ -47,10 +50,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (User) {
-      getProfile();
-      getFeedbacks();
-    }
+    if (User) getProfile();
   }, [User]);
 
   useEffect(() => {
@@ -63,6 +63,7 @@ export const UserProvider = ({ children }) => {
     Profile,
     setProfile,
     getProfile,
+    getFeedbacks,
   };
 
   return <context.Provider value={exposed}>{children}</context.Provider>;

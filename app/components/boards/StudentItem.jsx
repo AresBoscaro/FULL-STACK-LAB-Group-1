@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { BiChevronDown } from "react-icons/bi";
 import { AiFillStar } from "react-icons/ai";
@@ -13,7 +14,7 @@ const StudentItem = ({ course }) => {
   const [showFeedbacks, setShowFeedbacks] = useState(false);
   const [stars, setStars] = useState(0);
   const [comment, setComment] = useState("");
-  const { Profile } = useUser();
+  const { Profile, getFeedbacks } = useUser();
 
   const toggleItem = () => {
     setShowFeedbacks(!showFeedbacks);
@@ -36,14 +37,18 @@ const StudentItem = ({ course }) => {
   }, [course.feedback]);
 
   const saveFeedback = async () => {
-    await supabaseClient.from("feedbacks").insert({
+    const { data, error } = await supabaseClient.from("feedbacks").update({
       metadata: {
         rating: stars,
         comment: comment,
       },
       class_id: course.id,
       profile_id: Profile.id,
-    });
+    }); // insert where
+
+    if (error) console.log(error.message);
+
+    //getFeedbacks();
   };
 
   return (
