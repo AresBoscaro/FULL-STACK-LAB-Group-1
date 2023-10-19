@@ -48,7 +48,7 @@ const SignUp = () => {
         router.push("/dashboard");
       }
     }
-  }, [User]);
+  }, [Profile]);
 
   return (
     <div className="p-6 flex justify-between w-full h-full">
