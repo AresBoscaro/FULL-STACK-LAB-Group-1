@@ -2,8 +2,7 @@ import ProfileForm from "../forms/ProfileForm";
 
 export default function Profile() {
   return (
-    <div>
-      <h1 className="ml-5 font-bold">Edit profile</h1>
+    <div className="w-full h-full flex items-center justify-center">
       <ProfileForm />
     </div>
   );
