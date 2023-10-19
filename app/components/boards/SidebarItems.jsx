@@ -38,12 +38,11 @@ const SidebarItems = () => {
     },
   ];
 
-  const [tabs, setTabs] = useState(studTabs);
-
+  const [tabs, setTabs] = useState([]);
   const pathname = usePathname();
 
   useEffect(() => {
-    if (pathname === "/admin") setTabs(adminTabs);
+    pathname === "/admin" ? setTabs(adminTabs) : setTabs(studTabs);
   }, [pathname]);
 
   const handleSignOut = async () => {
