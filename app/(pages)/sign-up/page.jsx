@@ -10,6 +10,18 @@ import { useEffect } from "react";
 const SignUp = () => {
   const router = useRouter();
 
+  const { Profile } = useUser();
+
+  useEffect(() => {
+    if (Profile) {
+      if (Profile.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
+  }, [Profile]);
+
   const inputs = [
     {
       label: "First Name",
@@ -37,18 +49,6 @@ const SignUp = () => {
       name: "password",
     },
   ];
-
-  const { Profile } = useUser();
-
-  useEffect(() => {
-    if (Profile) {
-      if (Profile.isAdmin) {
-        router.push("/admin");
-      } else {
-        router.push("/dashboard");
-      }
-    }
-  }, [Profile]);
 
   return (
     <div className="p-6 flex justify-between w-full h-full">

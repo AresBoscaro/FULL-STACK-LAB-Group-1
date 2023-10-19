@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import toast, { Toaster } from "react-hot-toast";
@@ -27,28 +28,13 @@ const AuthForm = ({
   const { User, setUser } = useUser();
 
   const handleSignUp = async () => {
-    if (
-      email.trim() &&
-      password.trim() &&
-      fname.trim() &&
-      lname.trim() &&
-      studId.trim()
-    ) {
-      await supabaseClient.auth.signUp({
+    if (email.trim() && password.trim()) {
+      const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
       });
 
-      if (User) {
-        await supabaseClient
-          .from("profiles")
-          .update({
-            first_name: fname,
-            last_name: lname,
-            stud_id: studId,
-          })
-          .eq("id", User.id);
-      }
+      if (data) setUser(data.user);
 
       if (password.length < 8) {
         toast.error("Password must be at least 8 characters");
@@ -57,6 +43,27 @@ const AuthForm = ({
       toast.error("All fields are required");
     }
   };
+
+  const handleUpdateProfile = async () => {
+    if (User) {
+      if (fname.trim() && lname.trim() && studId.trim()) {
+        await supabaseClient
+          .from("profiles")
+          .update({
+            first_name: fname,
+            last_name: lname,
+            stud_id: studId,
+          })
+          .eq("id", User.id);
+      } else {
+        toast.error("All fields are required");
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleUpdateProfile();
+  }, [User]);
 
   const handleSignIn = async () => {
     if (email.trim() && password.trim()) {

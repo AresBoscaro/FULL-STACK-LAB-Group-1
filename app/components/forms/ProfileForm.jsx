@@ -8,9 +8,9 @@ import { supabaseClient } from "@/app/lib/supabase";
 
 export default function ProfileForm() {
   const { Profile, getProfile } = useUser();
-  const [name, setName] = useState(Profile?.first_name);
-  const [lastname, setLastname] = useState(Profile?.last_name);
-  const [matricola, setMatricola] = useState(Profile?.stud_id);
+  const [name, setName] = useState(Profile?.first_name || "");
+  const [lastname, setLastname] = useState(Profile?.last_name || "");
+  const [matricola, setMatricola] = useState(Profile?.stud_id || "");
 
   const inputs = [
     {
@@ -99,6 +99,7 @@ export default function ProfileForm() {
             padding: "16px",
             marginBottom: "1.5rem",
             marginRight: "1.5rem",
+            backgroundColor: "#F5F7F8",
           },
         }}
       />
