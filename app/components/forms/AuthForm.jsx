@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
+import toast, { Toaster } from "react-hot-toast";
 
 const AuthForm = ({
   title,
@@ -23,34 +24,49 @@ const AuthForm = ({
   const { User, setUser } = useUser();
 
   const handleSignUp = async () => {
-    await supabaseClient.auth.signUp({
-      email,
-      password,
-    });
+    if (email.trim() && password.trim()) {
+      await supabaseClient.auth.signUp({
+        email,
+        password,
+      });
+    } else {
+      console.log("empty field");
+    }
 
     if (User) {
-      await supabaseClient
-        .from("profiles")
-        .update({
-          first_name: fname,
-          last_name: lname,
-          stud_id: studId,
-        })
-        .eq("id", User.id);
+      if (fname.trim() && lname.trim() && studId.trim()) {
+        await supabaseClient
+          .from("profiles")
+          .update({
+            first_name: fname,
+            last_name: lname,
+            stud_id: studId,
+          })
+          .eq("id", User.id);
+      } else {
+        toast.error("All fields are required.");
+      }
     }
   };
 
   const handleSignIn = async () => {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password,
-    });
+    if (email.trim() && password.trim()) {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (!error) setUser(data.user);
+      if (!error) setUser(data.user);
+    } else {
+      toast.error("All fields are required.");
+    }
   };
 
   return (
-    <div className="p-6 rounded-2xl h-full w-[430px] flex flex-col justify-between shadow-sm bg-white">
+    <form
+      className="p-6 rounded-2xl h-full w-[430px] flex flex-col justify-between shadow-sm bg-white"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="flex flex-col w-full items-center">
         <h1 className="font-bold text-xl text-zinc-900">{title}</h1>
         <p className="font-light text-zinc-500 text-sm">{subtitle}</p>
@@ -85,6 +101,7 @@ const AuthForm = ({
           </p>
         </div>
       </div>
+      <Toaster position="bottom-left" />
       <div>
         <ActionFormButton
           label={actionLabel}
@@ -103,7 +120,7 @@ const AuthForm = ({
           </p>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
@@ -114,6 +131,7 @@ const ActionFormButton = ({ onSignIn, onSignUp, label }) => {
     <button
       className="w-full rounded-xl p-2 text-center bg-slate-900"
       onClick={label === "Sign In" ? onSignIn : onSignUp}
+      type="submit"
     >
       <h3 className="text-white font-semibold text-lg">{label}</h3>
     </button>
