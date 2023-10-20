@@ -2,10 +2,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Logo from "./components/Logo";
-import AuthForm from "./components/forms/AuthForm";
-import { useUser } from "./context/user-provider";
+import AuthForm from "../components/forms/AuthForm";
+import { useUser } from "../providers/user-provider";
 import { useEffect } from "react";
+import Logo from "../components/Logo";
 
 const SignIn = () => {
   const { Profile } = useUser();
