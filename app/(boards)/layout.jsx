@@ -1,8 +1,8 @@
 "use client";
 
-import { BoardsProvider } from "@/app/context/boards-provider";
+import { BoardsProvider } from "@/app/providers/boards-provider";
 import { redirect } from "next/navigation";
-import { useUser } from "@/app/context/user-provider";
+import { useUser } from "@/app/providers/user-provider";
 import { useEffect } from "react";
 
 const BoardsLayout = ({ children }) => {

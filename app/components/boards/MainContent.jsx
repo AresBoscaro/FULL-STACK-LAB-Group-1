@@ -2,11 +2,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useBoard } from "../../context/boards-provider";
+import { useBoard } from "@/app/providers/boards-provider";
 import StudentItem from "./StudentItem";
 import AdminItem from "./AdminItem";
 import ProfileManager from "./ProfileManager";
-import { useUser } from "@/app/context/user-provider";
+import { useUser } from "@/app/providers/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useEffect, useState } from "react";
 

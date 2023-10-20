@@ -8,8 +8,8 @@ import { IoHelp } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useBoard } from "../../context/boards-provider";
-import { useUser } from "@/app/context/user-provider";
+import { useBoard } from "@/app/providers/boards-provider";
+import { useUser } from "@/app/providers/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 
 const SidebarItems = () => {
