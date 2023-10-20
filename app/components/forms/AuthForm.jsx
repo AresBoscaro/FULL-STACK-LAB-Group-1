@@ -3,7 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useUser } from "@/app/context/user-provider";
+import { useUser } from "@/app/providers/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { UserProvider } from "./context/user-provider";
+import { UserProvider } from "../providers/user-provider";
 import "./globals.css";
 
 export const metadata = {
