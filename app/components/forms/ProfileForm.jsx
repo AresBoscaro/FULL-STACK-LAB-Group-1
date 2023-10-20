@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { useUser } from "@/app/context/user-provider";
+import { useUser } from "@/app/providers/user-provider";
 import toast, { Toaster } from "react-hot-toast";
 import { supabaseClient } from "@/app/lib/supabase";
 
