@@ -20,7 +20,6 @@ const StudentItem = ({ course }) => {
     setShowFeedbacks(!showFeedbacks);
   };
 
-  console.log(course);
   const updateRating = (index) => {
     setStars(index + 1);
   };
@@ -37,18 +36,21 @@ const StudentItem = ({ course }) => {
   }, [course.feedback]);
 
   const saveFeedback = async () => {
-    const { data, error } = await supabaseClient.from("feedbacks").update({
-      metadata: {
-        rating: stars,
-        comment: comment,
-      },
-      class_id: course.id,
-      profile_id: Profile.id,
-    }); // insert where
+    const { data, error } = await supabaseClient
+      .from("feedbacks")
+      .update({
+        metadata: {
+          rating: stars,
+          comment: comment,
+        },
+        class_id: course.id,
+        profile_id: Profile.id,
+      })
+      .eq("id", course.feedback.id); // insert where
 
     if (error) console.log(error.message);
 
-    //getFeedbacks();
+    getFeedbacks();
   };
 
   return (

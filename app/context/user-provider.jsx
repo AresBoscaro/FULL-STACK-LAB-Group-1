@@ -33,7 +33,7 @@ export const UserProvider = ({ children }) => {
   const getFeedbacks = async () => {
     const { data, error } = await supabaseClient
       .from("feedbacks")
-      .select("metadata, class_id")
+      .select("id, metadata, class_id")
       .eq("profile_id", User.id);
 
     if (data)
