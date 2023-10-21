@@ -7,6 +7,7 @@ import { AiFillSave } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useUser } from "@/app/context/user-provider";
+import toast, { Toaster } from "react-hot-toast";
 
 const StudentItem = ({ course }) => {
   /* Current user  */
@@ -38,7 +39,6 @@ const StudentItem = ({ course }) => {
   const saveFeedback = async () => {
     /* Check if there is already a feedback */
     if (!course.feedback) {
-      console.log("Non c'è niente da vedere");
       const { data, error } = await supabaseClient.from("feedbacks").insert({
         metadata: {
           rating: stars,
@@ -47,10 +47,16 @@ const StudentItem = ({ course }) => {
         class_id: course.id,
         profile_id: Profile.id,
       });
+
+      if (error) {
+        toast.error("Error inserting feedback:", error.message);
+      } else {
+        toast.success("Feedback successfully inserted!");
+      }
       getFeedbacks();
       return;
     }
-
+    /* If there is not update the current feedback */
     const { data, error } = await supabaseClient
       .from("feedbacks")
       .update({
@@ -63,7 +69,11 @@ const StudentItem = ({ course }) => {
       })
       .eq("id", course.feedback.id);
 
-    if (error) console.log(error.message);
+    if (error) {
+      toast.error("Error updating feedback:", error.message);
+    } else {
+      toast.success("Feedback successfully updated!");
+    }
 
     getFeedbacks();
   };
@@ -125,6 +135,18 @@ const StudentItem = ({ course }) => {
           </div>
         </div>
       ) : null}
+
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            padding: "16px",
+            marginBottom: "1.5rem",
+            marginRight: "1.5rem",
+            backgroundColor: "#F5F7F8",
+          },
+        }}
+      />
     </div>
   );
 };
