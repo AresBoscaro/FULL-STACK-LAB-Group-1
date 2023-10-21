@@ -32,10 +32,11 @@ const MainContent = () => {
 
       acc.push({
         ...course,
-        feedback:
-          courseFeedbacks.length !== 0
-            ? { id: courseFeedbacks[0]?.id, ...courseFeedbacks[0]?.metadata }
-            : null,
+        feedback: !(
+          Array.isArray(courseFeedbacks) && courseFeedbacks.length === 0
+        )
+          ? { id: courseFeedbacks[0]?.id, ...courseFeedbacks[0]?.metadata }
+          : null,
       });
       return acc;
     }, []);
