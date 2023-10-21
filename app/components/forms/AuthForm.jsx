@@ -7,6 +7,7 @@ import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { BeatLoader } from "react-spinners";
 
 const AuthForm = ({
   title,
@@ -23,10 +24,28 @@ const AuthForm = ({
   const [studId, setStudId] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const { User, setUser } = useUser();
 
+  const handleSignIn = async () => {
+    setIsLoading(true);
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (data) setUser(data.user);
+
+    if (error) toast.error(error.message);
+
+    setIsLoading(false);
+  };
+
   const handleSignUp = async () => {
+    setIsLoading(true);
+
     if (
       email.trim() &&
       password.trim() &&
@@ -45,6 +64,8 @@ const AuthForm = ({
     } else {
       toast.error("All fields are required");
     }
+
+    setIsLoading(false);
   };
 
   const handleUpdateProfile = async () => {
@@ -63,19 +84,6 @@ const AuthForm = ({
   useEffect(() => {
     handleUpdateProfile();
   }, [User]);
-
-  const handleSignIn = async () => {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (!error) {
-      setUser(data.user);
-    } else {
-      toast.error(error.message);
-    }
-  };
 
   const handleSendResetEmail = async () => {
     if (email.trim()) {
@@ -162,6 +170,7 @@ const AuthForm = ({
           onSignUp={handleSignUp}
           onSendEmail={handleSendResetEmail}
           onResetPassword={handleResetPassword}
+          isLoading={isLoading}
         />
         <div className="w-full flex justify-center mt-2">
           <p className="text-xs font-light text-slate-500">
@@ -187,6 +196,7 @@ const ActionFormButton = ({
   onSendEmail,
   onResetPassword,
   label,
+  isLoading,
 }) => {
   return (
     <button
@@ -202,7 +212,9 @@ const ActionFormButton = ({
       }
       type="submit"
     >
-      <h3 className="text-white font-semibold text-lg">{label}</h3>
+      <h3 className="text-white font-semibold text-lg">
+        {isLoading ? <BeatLoader size={8} color="white" /> : label}
+      </h3>
     </button>
   );
 };

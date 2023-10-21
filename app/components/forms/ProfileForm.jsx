@@ -1,16 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@/app/context/user-provider";
 import toast, { Toaster } from "react-hot-toast";
 import { supabaseClient } from "@/app/lib/supabase";
+import { BeatLoader } from "react-spinners";
 
 export default function ProfileForm() {
   const { Profile, getProfile } = useUser();
   const [name, setName] = useState(Profile?.first_name || "");
   const [lastname, setLastname] = useState(Profile?.last_name || "");
   const [matricola, setMatricola] = useState(Profile?.stud_id || "");
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputs = [
     {
@@ -54,6 +56,8 @@ export default function ProfileForm() {
   };
 
   async function updateUser() {
+    setIsLoading(true);
+
     const updatedUserData = {};
 
     if (name !== Profile?.first_name) {
@@ -77,15 +81,21 @@ export default function ProfileForm() {
 
     if (error) {
       console.error("Error updating user:", error.message);
-      toast.error(error.message);
+      toast.error("Something gone wrong");
       return null; // Handle the error as needed
     } else {
       toast.success("Profile successfully updated!");
       getProfile();
     }
 
+    setIsLoading(false);
+
     return data;
   }
+
+  useEffect(() => {
+    console.log("isLoading", isLoading);
+  }, [isLoading]);
 
   return (
     <form
@@ -119,19 +129,21 @@ export default function ProfileForm() {
           </div>
         ))}
       </div>
-      <ConfirmButton onClick={updateUser} />
+      <ConfirmButton onClick={updateUser} isLoading={isLoading} />
     </form>
   );
 }
 
-function ConfirmButton({ onClick }) {
+function ConfirmButton({ onClick, isLoading }) {
   return (
     <button
       className="w-full rounded-xl p-2 text-center bg-slate-900"
       onClick={onClick}
       type="submit"
     >
-      <h3 className="text-white font-semibold text-lg">Confirm</h3>
+      <h3 className="text-white font-semibold text-lg">
+        {isLoading ? <BeatLoader size={8} color="white" /> : "Confirm"}
+      </h3>
     </button>
   );
 }
