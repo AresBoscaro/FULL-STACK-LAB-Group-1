@@ -3,6 +3,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabaseClient } from "../lib/supabase";
+import { useRouter } from "next/navigation";
 
 const context = createContext();
 
@@ -53,8 +54,17 @@ export const UserProvider = ({ children }) => {
     if (User) getProfile();
   }, [User]);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (Profile) console.log("profile", Profile);
+    if (Profile) {
+      console.log("profile", Profile);
+      if (Profile.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    }
   }, [Profile]);
 
   const exposed = {
