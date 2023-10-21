@@ -24,7 +24,6 @@ const SignIn = () => {
         title={"Welcome Student"}
         subtitle={"Please enter your credentials"}
         actionLabel={"Sign In"}
-        // onRedirect={() => router.push("/sign-up")}
         redirectLabel={"Don't have an account?"}
         redirectSpan={"Create"}
         inputs={inputs}
