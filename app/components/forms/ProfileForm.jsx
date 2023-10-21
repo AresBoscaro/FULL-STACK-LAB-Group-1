@@ -77,7 +77,7 @@ export default function ProfileForm() {
 
     if (error) {
       console.error("Error updating user:", error.message);
-      toast.error("Error updating user:", error.message);
+      toast.error(error.message);
       return null; // Handle the error as needed
     } else {
       toast.success("Profile successfully updated!");

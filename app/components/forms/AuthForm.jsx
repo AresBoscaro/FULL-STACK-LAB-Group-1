@@ -28,7 +28,13 @@ const AuthForm = ({
   const { User, setUser } = useUser();
 
   const handleSignUp = async () => {
-    if (email.trim() && password.trim()) {
+    if (
+      email.trim() &&
+      password.trim() &&
+      fname.trim() &&
+      lname.trim() &&
+      studId.trim()
+    ) {
       const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
@@ -36,9 +42,7 @@ const AuthForm = ({
 
       if (data) setUser(data.user);
 
-      if (password.length < 8) {
-        toast.error("Password must be at least 8 characters");
-      }
+      if (error) toast.error(error.message);
     } else {
       toast.error("All fields are required");
     }
@@ -46,18 +50,14 @@ const AuthForm = ({
 
   const handleUpdateProfile = async () => {
     if (User) {
-      if (fname.trim() && lname.trim() && studId.trim()) {
-        await supabaseClient
-          .from("profiles")
-          .update({
-            first_name: fname,
-            last_name: lname,
-            stud_id: studId,
-          })
-          .eq("id", User.id);
-      } else {
-        toast.error("All fields are required");
-      }
+      await supabaseClient
+        .from("profiles")
+        .update({
+          first_name: fname,
+          last_name: lname,
+          stud_id: studId,
+        })
+        .eq("id", User.id);
     }
   };
 
@@ -66,23 +66,15 @@ const AuthForm = ({
   }, [User]);
 
   const handleSignIn = async () => {
-    if (email.trim() && password.trim()) {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      if (!error) {
-        setUser(data.user);
-      } else {
-        toast.error(error.message);
-      }
-
-      if (password.length < 8) {
-        toast.error("Password must be at least 8 characters");
-      }
+    if (!error) {
+      setUser(data.user);
     } else {
-      toast.error("All fields are required");
+      toast.error(error.message);
     }
   };
 
