@@ -69,8 +69,8 @@ export const UserProvider = ({ children }) => {
 
   const exposed = {
     User,
-    setUser,
     Profile,
+    setUser,
     setProfile,
     getProfile,
     getFeedbacks,
