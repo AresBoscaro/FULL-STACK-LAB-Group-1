@@ -36,6 +36,21 @@ const StudentItem = ({ course }) => {
   }, [course.feedback]);
 
   const saveFeedback = async () => {
+    /* Check if there is already a feedback */
+    if (!course.feedback) {
+      console.log("Non c'è niente da vedere");
+      const { data, error } = await supabaseClient.from("feedbacks").insert({
+        metadata: {
+          rating: stars,
+          comment: comment,
+        },
+        class_id: course.id,
+        profile_id: Profile.id,
+      });
+      getFeedbacks();
+      return;
+    }
+
     const { data, error } = await supabaseClient
       .from("feedbacks")
       .update({
@@ -46,7 +61,7 @@ const StudentItem = ({ course }) => {
         class_id: course.id,
         profile_id: Profile.id,
       })
-      .eq("id", course.feedback.id); // insert where
+      .eq("id", course.feedback.id);
 
     if (error) console.log(error.message);
 

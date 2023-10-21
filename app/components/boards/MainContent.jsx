@@ -29,11 +29,13 @@ const MainContent = () => {
       const courseFeedbacks = Profile.feedbacks?.filter(
         (feedback) => feedback.class_id === course.id
       );
+
       acc.push({
         ...course,
-        feedback: courseFeedbacks
-          ? { id: courseFeedbacks[0]?.id, ...courseFeedbacks[0]?.metadata }
-          : null,
+        feedback:
+          courseFeedbacks.length !== 0
+            ? { id: courseFeedbacks[0]?.id, ...courseFeedbacks[0]?.metadata }
+            : null,
       });
       return acc;
     }, []);
