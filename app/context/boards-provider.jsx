@@ -1,12 +1,20 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useUser } from "./user-provider";
+import { redirect } from "next/navigation";
 
 const context = createContext();
 
 export const BoardsProvider = ({ children }) => {
   const [tab, setTab] = useState("Dashboard");
   const [items, setItems] = useState([]);
+
+  const { Profile } = useUser();
+
+  useEffect(() => {
+    if (!Profile) redirect("/");
+  }, [Profile]);
 
   const exposed = {
     tab,

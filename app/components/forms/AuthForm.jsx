@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 const AuthForm = ({
   title,
   subtitle,
-  onRedirect,
   redirectLabel,
   redirectSpan,
   inputs,
@@ -109,7 +108,7 @@ const AuthForm = ({
 
   return (
     <form
-      className={`p-6 rounded-2xl w-[430px] flex flex-col justify-between shadow-sm bg-white ${
+      className={`p-6 rounded-2xl w-[430px] flex flex-col justify-between shadow-xl bg-white ${
         actionLabel === "Send Email" || actionLabel === "Confirm"
           ? "h-[40%]"
           : "h-full"
@@ -165,11 +164,11 @@ const AuthForm = ({
           onResetPassword={handleResetPassword}
         />
         <div className="w-full flex justify-center mt-2">
-          <p className="text-xs font-light text-zinc-500">
+          <p className="text-xs font-light text-slate-500">
             {redirectLabel}{" "}
             <span
-              className="font-semibold text-zinc-900 text-sm cursor-pointer"
-              onClick={onRedirect}
+              className="font-semibold text-slate-800 text-sm cursor-pointer"
+              onClick={() => router.push("/sign-up")}
             >
               {redirectSpan}
             </span>
