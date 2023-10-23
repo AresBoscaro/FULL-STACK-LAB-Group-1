@@ -46,10 +46,12 @@ const MainContent = () => {
     const { data, error } = await supabaseClient
       .from("feedbacks")
       .select(
-        `id,
-      metadata,
-      class_id
-      ,profiles(stud_id)`
+        `
+        id,
+        metadata,
+        class_id,
+        profiles (students (first_name, last_name, stud_id))
+      `
       )
       .eq("class_id", selectedClass);
     console.log(data);

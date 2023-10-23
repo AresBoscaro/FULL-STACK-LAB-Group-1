@@ -56,7 +56,7 @@ const AuthForm = ({
       //check if stud exists in students table - all fields
       const { data: studData, error: studError } = await supabaseClient
         .from("students")
-        .select("*")
+        .select()
         .eq("first_name", fname)
         .eq("last_name", lname)
         .eq("stud_id", studId);
@@ -81,20 +81,20 @@ const AuthForm = ({
     }
   };
 
-  const handleUpdateProfile = async () => {
-    if (User) {
-      await supabaseClient
-        .from("profiles")
-        .update({
-          stud_id: studId,
-        })
-        .eq("id", User.id);
-    }
-  };
+  // const handleUpdateProfile = async () => {
+  //   if (User) {
+  //     await supabaseClient
+  //       .from("profiles")
+  //       .update({
+  //         stud_id: studId,
+  //       })
+  //       .eq("id", User.id);
+  //   }
+  // };
 
-  useEffect(() => {
-    handleUpdateProfile();
-  }, [User]);
+  // useEffect(() => {
+  //   handleUpdateProfile();
+  // }, [User]);
 
   const handleSendResetEmail = async () => {
     if (email.trim()) {
