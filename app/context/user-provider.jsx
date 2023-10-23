@@ -29,7 +29,7 @@ export const UserProvider = ({ children }) => {
       .eq("id", User.id)
       .single();
 
-    if (profileData) {
+    if (profileData && !profileData.isAdmin) {
       const { data: studData, error: studError } = await supabaseClient
         .from("students")
         .select()
@@ -39,12 +39,18 @@ export const UserProvider = ({ children }) => {
       if (studData) {
         setProfile({
           id: profileData.id,
+          isAdmin: profileData.isAdmin,
           first_name: studData.first_name,
           last_name: studData.last_name,
           stud_id: studData.stud_id,
         });
         getFeedbacks();
       }
+    } else if (profileData && profileData.isAdmin) {
+      setProfile({
+        id: profileData.id,
+        isAdmin: profileData.isAdmin,
+      });
     }
   };
 
@@ -68,7 +74,10 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (User) getProfile();
+    if (User) {
+      console.log("user", User);
+      getProfile();
+    }
   }, [User]);
 
   const router = useRouter();

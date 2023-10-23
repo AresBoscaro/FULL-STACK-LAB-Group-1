@@ -21,7 +21,11 @@ const AdminItem = ({ feedback }) => {
       <div className="flex items-center w-full">
         <div className="flex items-center gap-28">
           <h1 className="text-base font-semibold text-slate-800">
-            {feedback.profiles.stud_id}
+            {feedback.profiles.students.first_name +
+              " " +
+              feedback.profiles.students.last_name +
+              "            " +
+              feedback.profiles.students.stud_id}
           </h1>
           <div className="flex gap-3">
             {[...Array(5)].map((_, index) =>
@@ -59,7 +63,7 @@ const AdminItem = ({ feedback }) => {
         <div className="w-full py-2 flex items-end justify-between gap-6">
           <div className="flex flex-col w-full">
             <h1 className="text-sm font-regular text-slate-900 w-full p-2 bg-slate-600/40 rounded-t-xl">
-              Leave a comment
+              Comment
             </h1>
             <textarea
               value={feedback.metadata.comment}
