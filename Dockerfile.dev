@@ -1,7 +1,7 @@
-# pull official base image
-FROM node:13.12.0-alpine
+# pull Immagine node in Alpine
+FROM node:13.4.12-alpine
 
-# set working directory
+# directory di lavoro
 WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
@@ -13,8 +13,8 @@ COPY package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 
-# add app
+# Copia intera app nel container
 COPY . ./
 
-# start app
+# avvia app
 CMD ["npm", "start"]
