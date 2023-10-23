@@ -20,19 +20,29 @@ export const UserProvider = ({ children }) => {
   };
 
   const getProfile = async () => {
-    const { data, error } = await supabaseClient
+    // Profile has: id, isAdmin, stud_id
+    // Student has: id, first_name, last_name, stud_id
+
+    const { data: profileData, error: profileError } = await supabaseClient
       .from("profiles")
       .select()
-      .eq("id", User.id);
+      .eq("id", User.id)
+      .single();
 
-    if (data) {
+    if (profileData) {
       const { data: studData, error: studError } = await supabaseClient
         .from("students")
         .select()
-        .eq("stud_id", data[0].stud_id);
+        .eq("stud_id", profileData.stud_id)
+        .single();
 
       if (studData) {
-        setProfile(studData[0]);
+        setProfile({
+          id: profileData.id,
+          first_name: studData.first_name,
+          last_name: studData.last_name,
+          stud_id: studData.stud_id,
+        });
         getFeedbacks();
       }
     }
