@@ -41,6 +41,9 @@ const StudentItem = ({ course }) => {
   const saveFeedback = async () => {
     setIsLoading(true);
     /* Check if there is already a feedback */
+    console.log("course", course.feedback);
+    console.log("profile", Profile);
+
     if (!course.feedback) {
       const { data, error } = await supabaseClient.from("feedbacks").insert({
         metadata: {
@@ -52,11 +55,12 @@ const StudentItem = ({ course }) => {
       });
 
       if (error) {
-        toast.error("Error inserting feedback:", error.message);
+        toast.error("Something gone wrong");
       } else {
         toast.success("Feedback successfully inserted!");
       }
       getFeedbacks();
+      setIsLoading(false);
       return;
     }
     /* If there is not update the current feedback */
@@ -73,7 +77,7 @@ const StudentItem = ({ course }) => {
       .eq("id", course.feedback.id);
 
     if (error) {
-      toast.error("Error updating feedback:", error.message);
+      toast.error("Something gone wrong");
     } else {
       toast.success("Feedback successfully updated!");
     }
