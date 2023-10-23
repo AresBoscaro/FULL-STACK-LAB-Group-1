@@ -1,11 +1,11 @@
-import MainContent from "@/app/components/boards/MainContent";
+import AdminContent from "@/app/components/boards/AdminContent";
 import Sidebar from "@/app/components/boards/Sidebar";
 
 const AdminBoard = () => {
   return (
     <>
       <Sidebar />
-      <MainContent />
+      <AdminContent />
     </>
   );
 };

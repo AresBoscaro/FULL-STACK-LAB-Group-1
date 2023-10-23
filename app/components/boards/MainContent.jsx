@@ -23,6 +23,7 @@ const MainContent = () => {
 
     if (!Profile.feedbacks) {
       setCourses(data);
+      return;
     }
 
     const mergedCourses = data.reduce((acc, course) => {
@@ -53,13 +54,9 @@ const MainContent = () => {
       <h1 className="text-slate-800 font-semibold text-lg">{tab}</h1>
       {tab === "Dashboard" && (
         <div className="space-y-4 ">
-          {courses.map((course, id) =>
-            pathname === "/dashboard" ? (
-              <StudentItem key={id} course={course} />
-            ) : (
-              <AdminItem key={id} />
-            )
-          )}
+          {courses.map((course, id) => (
+            <StudentItem key={id} course={course} />
+          ))}
         </div>
       )}
       {tab == "Profile" && <ProfileManager />}
