@@ -20,18 +20,21 @@ export default function ProfileForm() {
       type: "name",
       name: "name",
       value: name,
+      disable: false,
     },
     {
       label: "Last Name",
       type: "lastname",
       name: "lastname",
       value: lastname,
+      disable: false,
     },
     {
       label: "ID",
       type: "matricola",
       name: "matricola",
       value: matricola,
+      disable: true,
     },
   ];
 
@@ -46,9 +49,6 @@ export default function ProfileForm() {
         break;
       case "password":
         setPassword(value);
-        break;
-      case "matricola":
-        setMatricola(value);
         break;
       default:
         break;
@@ -66,18 +66,13 @@ export default function ProfileForm() {
     if (lastname !== Profile?.last_name) {
       updatedUserData.last_name = lastname;
     }
-    if (matricola !== Profile?.stud_id) {
-      updatedUserData.stud_id = matricola;
-    }
-
-    console.log(updatedUserData);
 
     if (Object.keys(updatedUserData).length === 0) return;
 
     const { data, error } = await supabaseClient
-      .from("profiles")
+      .from("students")
       .update(updatedUserData)
-      .eq("id", Profile.id);
+      .eq("stud_id", Profile.stud_id);
 
     if (error) {
       console.error("Error updating user:", error.message);
@@ -125,6 +120,7 @@ export default function ProfileForm() {
               onChange={handleInputChange}
               className="w-full p-2 rounded-lg border-[1px] border-slate-900/40 outline-none text-slate-600"
               value={input.value}
+              disabled={input.disable}
             />
           </div>
         ))}
