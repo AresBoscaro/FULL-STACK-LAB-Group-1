@@ -26,8 +26,15 @@ export const UserProvider = ({ children }) => {
       .eq("id", User.id);
 
     if (data) {
-      setProfile(data[0]);
-      getFeedbacks();
+      const { data: studData, error: studError } = await supabaseClient
+        .from("students")
+        .select()
+        .eq("stud_id", data[0].stud_id);
+
+      if (studData) {
+        setProfile(studData[0]);
+        getFeedbacks();
+      }
     }
   };
 
