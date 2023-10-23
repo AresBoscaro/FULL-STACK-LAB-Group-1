@@ -111,7 +111,20 @@ export default function ProfileForm() {
       <div>
         {inputs.map((input, id) => (
           <div key={id} className="mt-8">
-            <h3 className="text-sm font-regular text-slate-900">
+            <div className="flex flex-col w-full">
+              <h1 className="text-sm font-regular text-slate-900 w-full p-2 bg-slate-600/40 rounded-t-lg">
+                {input.label}
+              </h1>
+              <input
+                name={input.name}
+                type={input.type}
+                onChange={handleInputChange}
+                className="w-full resize-none p-2 outline-none text-slate-800 text-sm font-light rounded-b-lg shadow-xlm border-[1px] border-slate-300/40"
+                value={input.value}
+                disabled={input.disable}
+              />
+            </div>
+            {/* <h3 className="text-sm font-regular text-slate-900">
               {input.label}
             </h3>
             <input
@@ -121,7 +134,7 @@ export default function ProfileForm() {
               className="w-full p-2 rounded-lg border-[1px] border-slate-900/40 outline-none text-slate-600"
               value={input.value}
               disabled={input.disable}
-            />
+            /> */}
           </div>
         ))}
       </div>
