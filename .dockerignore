@@ -1,0 +1,11 @@
+# Questo File Esclude i file presenti nella seguente lista
+# dalle operazioni di containerizzazione.
+# Se necessario aggiungere altri file, semplicemente aggiungerne il nome
+# (con estensione INCLUSA) nella lista seguente:
+
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+.dockerignore
+README.md
