@@ -78,23 +78,9 @@ const AuthForm = ({
       setIsLoading(false);
     } else {
       toast.error("All fields are required");
+      setIsLoading(false);
     }
   };
-
-  // const handleUpdateProfile = async () => {
-  //   if (User) {
-  //     await supabaseClient
-  //       .from("profiles")
-  //       .update({
-  //         stud_id: studId,
-  //       })
-  //       .eq("id", User.id);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   handleUpdateProfile();
-  // }, [User]);
 
   const handleSendResetEmail = async () => {
     if (email.trim()) {
