@@ -53,19 +53,32 @@ const AuthForm = ({
       lname.trim() &&
       studId.trim()
     ) {
-      const { data, error } = await supabaseClient.auth.signUp({
-        email,
-        password,
-      });
+      //check if stud exists in students table - all fields
+      const { data: studData, error: studError } = await supabaseClient
+        .from("students")
+        .select("*")
+        .eq("first_name", fname)
+        .eq("last_name", lname)
+        .eq("stud_id", studId);
 
-      if (data) setUser(data.user);
+      if (studData.length > 0) {
+        const { data: userData, error: userError } =
+          await supabaseClient.auth.signUp({
+            email,
+            password,
+          });
 
-      if (error) toast.error(error.message);
+        if (userData) setUser(userData.user);
+
+        if (userError) toast.error(userError.message);
+      } else {
+        toast.error("Vai a rubbbare");
+      }
+
+      setIsLoading(false);
     } else {
       toast.error("All fields are required");
     }
-
-    setIsLoading(false);
   };
 
   const handleUpdateProfile = async () => {
@@ -73,8 +86,6 @@ const AuthForm = ({
       await supabaseClient
         .from("profiles")
         .update({
-          first_name: fname,
-          last_name: lname,
           stud_id: studId,
         })
         .eq("id", User.id);
