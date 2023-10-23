@@ -10,10 +10,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <UserProvider>
-      <html lang="en">
-        <body className="bg-slate-400">{children}</body>
-      </html>
-    </UserProvider>
+    <html lang="en">
+      <body className="bg-slate-400">
+        <UserProvider>{children}</UserProvider>
+      </body>
+    </html>
   );
 }
