@@ -124,17 +124,6 @@ export default function ProfileForm() {
                 disabled={input.disable}
               />
             </div>
-            {/* <h3 className="text-sm font-regular text-slate-900">
-              {input.label}
-            </h3>
-            <input
-              name={input.name}
-              type={input.type}
-              onChange={handleInputChange}
-              className="w-full p-2 rounded-lg border-[1px] border-slate-900/40 outline-none text-slate-600"
-              value={input.value}
-              disabled={input.disable}
-            /> */}
           </div>
         ))}
       </div>
