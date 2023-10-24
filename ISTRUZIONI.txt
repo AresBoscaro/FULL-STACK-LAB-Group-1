@@ -1,0 +1,60 @@
+ISTRUZIONI PER L'USO
+
+(Redatto il 23/10/2023 da Ares Boscaro)
+
+Per eseguire correttamente le operazioni di containerizzazione, 
+aprire un terminale nella directory root della webapp e agire come segue:
+
+- Avviare DOcker Desktop come AMMINISTRATORI. (e non chiuderlo mai!)
+In caso contrario il sistema non avrà accesso al Daemon di Docker
+e la procedura di building sarà Impossibile!
+(Ci ho messo 2 giorni per scoprirlo)
+
+- Assicurarsi di avere tutte le dipendenze a posto.
+Per farlo basta eseguire un:
+
+ npm install
+
+- Se necessario, verificare che la webapp funzioni correttamente con:
+
+ npm run dev
+
+- Verificato eventualmente il corretto funzionamento, arrestare la webapp con:
+
+ Shift+c
+
+- Buildare la webapp.
+Per farlo inserire il comando:
+
+ npm run build
+
+- Una volta buildata la webapp, buildare l'immagine Docker.
+Per farlo inserire il comando:
+
+ docker build -t <NOMEIMMAGINE> .
+
+Il comando utilizzerà le istruzioni contenute nel Dockerfile acquisendo in autonomia
+le risorse necessarie. Non è richiesto alcun intervento da parte dell'utente.
+
+- Verificare il successo dell'operazione con il comando:
+
+ docker images
+
+Se presente, l'immagine creata sarà presente nell'elenco visualizzato a schermo
+sotto il nome di <NOMEIMMAGINE>!
+
+- Infine, creare il Container ed Avviarlo con il comando:
+
+ docker run -dp 127.0.0.1:3000:3000 <NOMEIMMAGINE>
+
+Se eseguito correttamente, il comando Creerà ed Avvierà in modalita Detached il container,
+esponendolo sulle porte 3000:3000 all'indirizzo 127.0.0.1:3000
+(http://localhost:3000/)
+
+
+
+NOTA IMPORTANTE!!!
+
+La webapp nel Container conserva tutte le impostazioni della webapp originaria
+INCLUSI collegamenti a Supabase e credenziali di accesso al DB.
+Questo significa che di base non sono necessari altri interventi sui file di configurazione.
