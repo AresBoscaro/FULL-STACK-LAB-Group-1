@@ -20,17 +20,14 @@ export const UserProvider = ({ children }) => {
   };
 
   const getProfile = async () => {
-    // Profile has: id, isAdmin, stud_id
-    // Student has: id, first_name, last_name, stud_id
-
-    const { data: profileData, error: profileError } = await supabaseClient
+    const { data: profileData } = await supabaseClient
       .from("profiles")
       .select()
       .eq("id", User.id)
       .single();
 
     if (profileData && !profileData.isAdmin) {
-      const { data: studData, error: studError } = await supabaseClient
+      const { data: studData } = await supabaseClient
         .from("students")
         .select()
         .eq("stud_id", profileData.stud_id)
@@ -55,7 +52,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const getFeedbacks = async () => {
-    const { data, error } = await supabaseClient
+    const { data } = await supabaseClient
       .from("feedbacks")
       .select("id, metadata, class_id")
       .eq("profile_id", User.id);
@@ -75,7 +72,6 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (User) {
-      console.log("user", User);
       getProfile();
     }
   }, [User]);
@@ -84,7 +80,6 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (Profile) {
-      console.log("profile", Profile);
       if (Profile.isAdmin) {
         router.push("/admin");
       } else {
