@@ -5,7 +5,7 @@ ISTRUZIONI PER L'USO
 Per eseguire correttamente le operazioni di containerizzazione, 
 aprire un terminale nella directory root della webapp e agire come segue:
 
-- Avviare DOcker Desktop come AMMINISTRATORI. (e non chiuderlo mai!)
+- Avviare Docker Desktop come AMMINISTRATORI. (e non chiuderlo mai!)
 In caso contrario il sistema non avrà accesso al Daemon di Docker
 e la procedura di building sarà Impossibile!
 (Ci ho messo 2 giorni per scoprirlo)
