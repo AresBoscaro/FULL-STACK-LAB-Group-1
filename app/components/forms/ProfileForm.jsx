@@ -88,10 +88,6 @@ export default function ProfileForm() {
     return data;
   }
 
-  useEffect(() => {
-    console.log("isLoading", isLoading);
-  }, [isLoading]);
-
   return (
     <form
       className="rounded-2xl h-full w-[430px] flex flex-col space-y-10"
