@@ -3,7 +3,6 @@
 import { BiChevronDown } from "react-icons/bi";
 import { AiFillStar } from "react-icons/ai";
 import { AiOutlineStar } from "react-icons/ai";
-import { AiFillSave } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useUser } from "@/app/context/user-provider";

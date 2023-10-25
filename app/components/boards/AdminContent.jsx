@@ -1,32 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useBoard } from "../../context/boards-provider";
-import StudentItem from "./StudentItem";
 import AdminItem from "./AdminItem";
-import ProfileManager from "./ProfileManager";
 import { useUser } from "@/app/context/user-provider";
 import { supabaseClient } from "@/app/lib/supabase";
 import { useEffect, useState } from "react";
 import Select from "react-select";
+import { AiFillStar } from "react-icons/ai";
 
 const MainContent = () => {
   const { tab } = useBoard();
   const { Profile } = useUser();
-
-  const pathname = usePathname();
   const [selectedClass, setSelectedClass] = useState(0);
   const [defaultClass, setDefaultClass] = useState();
   const [feedbacks, setFeedbacks] = useState([]);
   const [options, setOptions] = useState();
-
-  const [courses, setCourses] = useState([]);
+  const [feedbackCounter, setFeedbackCounter] = useState();
+  const [feedbackAverage, setFeedbackAverage] = useState();
 
   const getCourses = async () => {
     const { data, error } = await supabaseClient.from("classes").select();
-
-    console.log(data);
 
     /* Map courses to options */
     const formattedOptions = data.map((course) => ({
@@ -36,6 +30,22 @@ const MainContent = () => {
 
     setDefaultClass(formattedOptions[0]);
     setOptions(formattedOptions);
+  };
+
+  const calculateAverage = (feedbacks) => {
+    const { sum, count } = feedbacks.reduce(
+      (accumulator, obj) => {
+        if (obj.metadata && typeof obj.metadata.rating === "number") {
+          accumulator.sum += obj.metadata.rating;
+          accumulator.count++;
+        }
+        return accumulator;
+      },
+      { sum: 0, count: 0 }
+    );
+
+    const averageRating = count > 0 ? sum / count : 0;
+    return averageRating;
   };
 
   const handleChange = (choice) => {
@@ -54,7 +64,9 @@ const MainContent = () => {
       `
       )
       .eq("class_id", selectedClass);
-    console.log(data);
+
+    setFeedbackAverage(calculateAverage(data));
+    setFeedbackCounter(data.length);
     setFeedbacks(data);
   };
 
@@ -69,12 +81,15 @@ const MainContent = () => {
   return (
     <div className="h-full w-full bg-white shadow-sm flex flex-col rounded-2xl p-6 space-y-10 overflow-y-auto">
       <h1 className="text-slate-800 font-semibold text-lg">{tab}</h1>
-      <div className="flex ">
+      <div className="flex items-center pr-5 gap-3">
         <Select
           options={options}
           defaultValue={defaultClass}
           onChange={(choice) => handleChange(choice)}
         />
+        <h2 className="ml-auto">Feedbacks: {feedbackCounter}</h2>
+        <h2 className="ml-auto">Average: {feedbackAverage} </h2>{" "}
+        <AiFillStar size={18} />
       </div>
 
       {tab === "Dashboard" && (
