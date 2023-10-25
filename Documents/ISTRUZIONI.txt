@@ -51,6 +51,11 @@ Se eseguito correttamente, il comando Creerà ed Avvierà in modalita Detached i
 esponendolo sulle porte 3000:3000 all'indirizzo 127.0.0.1:3000
 (http://localhost:3000/)
 
+- Se necessario è possibile verificare il successo dell'operazione con il comando:
+
+ docker ps
+
+Tramite questo comando verrà mostrato un elenco di tutti i conteiner attualmente in funzione sulla macchina host.
 
 
 NOTA IMPORTANTE!!!
